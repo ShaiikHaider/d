@@ -1,0 +1,58 @@
+4(a) Apply Gaussian Naïve Bayes and Measure Accuracy
+
+# Gaussian Naïve Bayes Classification on Iris Dataset
+
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score
+
+# Load dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# Split dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Train the Naïve Bayes model
+model = GaussianNB()
+model.fit(X_train, y_train)
+
+# Predict test data
+y_pred = model.predict(X_test)
+
+# Evaluate accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy of Gaussian Naïve Bayes:", accuracy)
+
+# Predict a new sample
+new_sample = [[5.8, 3.0, 4.5, 1.5]]
+prediction = model.predict(new_sample)
+print("Predicted Class for New Sample:", iris.target_names[prediction][0])
+
+
+
+
+
+4(b) Perform Hierarchical Clustering and Draw Dendrogram
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.cluster.hierarchy as hrc
+
+# Create random dataset
+data = np.random.rand(5, 2)
+labels = ['P1', 'P2', 'P3', 'P4', 'P5']
+
+# Display dataset
+df = pd.DataFrame(data, columns=['X', 'Y'], index=labels)
+print("Dataset:\n", df)
+
+# Perform hierarchical clustering
+plt.figure(figsize=(8, 4))
+plt.title("Hierarchical Clustering Dendrogram")
+hrc.dendrogram(hrc.linkage(df, method='single'), labels=labels)
+plt.xlabel("Data Points")
+plt.ylabel("Euclidean Distance")
+plt.show()

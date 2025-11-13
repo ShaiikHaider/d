@@ -1,0 +1,67 @@
+5(a) Train a Decision Tree on the Iris Dataset & Visualize It
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
+
+# Load dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Train Decision Tree
+clf = DecisionTreeClassifier(random_state=0)
+clf.fit(X_train, y_train)
+
+# Predict and check accuracy
+y_pred = clf.predict(X_test)
+print("Accuracy:", accuracy_score(y_test, y_pred))
+
+# Visualize the decision tree
+plt.figure(figsize=(12, 8))
+plot_tree(clf, 
+          feature_names=iris.feature_names, 
+          class_names=iris.target_names, 
+          filled=True)
+plt.title("Decision Tree for Iris Dataset")
+plt.show()
+
+
+
+
+
+
+
+
+5(b) Cluster Data Using DBSCAN & Explain Core/Border/Noise Points
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import DBSCAN
+from sklearn.datasets import make_blobs
+from sklearn.preprocessing import StandardScaler
+
+# Generate sample data
+centers = [[0.5, 2], [-1, -1], [1.5, -1]]
+X, labels_true = make_blobs(n_samples=100, centers=centers, cluster_std=0.4, random_state=0)
+
+# Scale data
+X = StandardScaler().fit_transform(X)
+
+# Apply DBSCAN
+db = DBSCAN(eps=0.3, min_samples=5).fit(X)
+labels = db.labels_
+
+# Number of clusters (-1 means noise)
+n_clusters = len(set(labels)) - (1 if -1 in labels else 0)
+print("Estimated number of clusters:", n_clusters)
+
+# Plot clusters
+plt.figure(figsize=(8, 5))
+plt.scatter(X[:, 0], X[:, 1], c=labels, cmap='rainbow', s=30)
+plt.title("DBSCAN Clustering")
+plt.show()

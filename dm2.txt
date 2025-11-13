@@ -1,0 +1,107 @@
+2a - Label Encoding
+
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+
+# Create sample categorical data
+colors = np.array(['Red', 'Blue', 'Green', 'Red', 'Green'])
+
+# Create LabelEncoder object
+le = LabelEncoder()
+
+# Fit and transform
+encoded_colors = le.fit_transform(colors)
+
+print("Original Values:", colors)
+print("Encoded Values:", encoded_colors)
+
+
+
+
+
+🔹 One-Hot Encoding
+
+import pandas as pd
+from sklearn.preprocessing import OneHotEncoder
+
+# Create a small dataset
+data = {'Fruit': ['Apple', 'Banana', 'Orange', 'Apple']}
+df = pd.DataFrame(data)
+print("Original DataFrame:\n", df)
+
+# Apply OneHotEncoder
+encoder = OneHotEncoder(sparse_output=False)
+encoded = encoder.fit_transform(df[['Fruit']])
+
+# Convert encoded array to DataFrame
+encoded_df = pd.DataFrame(encoded, columns=encoder.get_feature_names_out(['Fruit']))
+
+# Combine both for clarity
+final_df = pd.concat([df, encoded_df], axis=1)
+print("\nAfter One-Hot Encoding:\n", final_df)
+
+
+
+
+
+
+
+
+2(b) Apply Standard Scaling & Split Dataset
+
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+import numpy as np
+
+# Sample numeric dataset
+data = {
+    'Height': [150, 160, 170, 180, 190],
+    'Weight': [50, 60, 70, 80, 90]
+}
+df = pd.DataFrame(data)
+print("Original Data:\n", df)
+
+# Apply StandardScaler
+scaler = StandardScaler()
+scaled_data = scaler.fit_transform(df)
+scaled_df = pd.DataFrame(scaled_data, columns=df.columns)
+
+print("\nStandardized Data:\n", scaled_df)
+
+# Create dummy X, y for splitting
+X = np.arange(1, 25).reshape(12, 2)
+y = np.array([0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0])
+
+# Split into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
+
+print("\nTraining X:\n", X_train)
+print("\nTesting X:\n", X_test)
+print("\nTraining y:\n", y_train)
+print("\nTesting y:\n", y_test)
+
+
+
+
+
+
+
+2(c) Calculate Jaccard Similarity and Euclidean Distance
+
+# Jaccard Similarity
+set1 = set([0, 1, 2, 5, 6])
+set2 = set([1, 2, 3, 5, 7, 9])
+
+jaccard_similarity = len(set1.intersection(set2)) / len(set1.union(set2))
+print(f"Jaccard Similarity: {jaccard_similarity}")
+
+# Euclidean Distance
+from scipy.spatial.distance import euclidean
+import numpy as np
+
+x = np.array([1, 2, 3])
+y = np.array([4, 5, 6])
+
+euclidean_distance = euclidean(x, y)
+print(f"Euclidean Distance: {euclidean_distance}")
